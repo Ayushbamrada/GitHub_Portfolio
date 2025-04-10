@@ -5,25 +5,32 @@ import { motion } from 'framer-motion';
 
 const projects = [
   {
-    title: 'Portfolio Website',
-    description: 'A personal portfolio built with React and Tailwind CSS.',
-    link: 'https://github.com/ayushbamrada/portfolio',
+    id: 1,
+    title: "Co-Working Hybrid App",
+    description:
+      "A hybrid mobile application with two types of users: Normal Users and Property Owners. Normal users can book co-working spaces, while owners can register their properties with rent, facilities, and photos. Includes test-mode payment gateway and multiple screens like Welcome, User Selection, Signup, Login, Dashboards for both roles, Sidebar & Bottom Tab Navigation, Booking, Upcoming/Completed/Cancelled screens, KYC, Profile, Notifications, FAQs, Privacy Policy, and more.",
   },
   {
-    title: 'Node.js API',
-    description: 'A RESTful API built using Express.js for user management.',
-    link: 'https://github.com/ayushbamrada/api-project',
+    id: 2,
+    title: "RGRecords - Music Contest App",
+    description:
+      "RGRecords is a real-world hybrid mobile app with two user types: Normal Users who participate in music contests and Event Owners who publish contest details including fee and venue. App includes screens like Welcome, User Selection, Signup/Login, Dashboard, Bottom Tab Navigation, Notifications, Profile, Event Details, Contest Registration, Personal Details, Education, Professional Info, Post Registration Summary, and Payment Gateway integration.",
   },
 ];
 
 const Home = () => {
   const [scrollDirection, setScrollDirection] = useState('down');
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [expanded, setExpanded] = useState(false);  // Manage description toggle
 
   const fadeUp = {
     hidden: { opacity: 0, y: 60 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
     exit: { opacity: 0, y: 60, transition: { duration: 0.4 } },
+  };
+
+  const toggleDescription = () => {
+    setExpanded(!expanded);
   };
 
   useEffect(() => {
@@ -66,7 +73,11 @@ const Home = () => {
               animate={scrollDirection === 'down' ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-              <ProjectCard {...project} />
+              <ProjectCard
+                {...project}
+                expanded={expanded}  // Pass expanded state to ProjectCard
+                toggleDescription={toggleDescription}  // Pass toggle function to ProjectCard
+              />
             </motion.div>
           ))}
         </div>
